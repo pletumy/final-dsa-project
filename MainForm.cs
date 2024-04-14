@@ -13,11 +13,12 @@ namespace do_an_dsa
         private void Form1_Load(object sender, EventArgs e)
         {
             //set up luôn có 1 file
+            /*
             string fileUrl = "EMPTY.html";
             FileHTML demo = new FileHTML(fileUrl);
 
             dsFileHTML.enqueueDS(demo);
-
+            */
             for (int i = 0; i < dsFileHTML.demDS(); i++)
             {
                 FileHTML file = (FileHTML)dsFileHTML.layNode(i).data;
@@ -128,6 +129,7 @@ namespace do_an_dsa
                     if (isValid)
                     {
                         txt_xuLyFile.Text = selectedFile.inNoiDungDung(html);
+                        ;
                     }
                     else txt_xuLyFile.Text = selectedFile.inNoiDungSai(html);
                     ;

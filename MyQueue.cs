@@ -48,7 +48,7 @@ namespace do_an_dsa
         public bool isEmpty() {
             return rear == null || front == null;
         }
-
+        
         public int Count()
         {
             if (isEmpty()) return 0;
@@ -64,6 +64,7 @@ namespace do_an_dsa
 
             return count; 
         }
+        
         public Node GetNode(int index)
         {
             if (index < 0 || index >= Count())

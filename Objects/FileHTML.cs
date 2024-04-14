@@ -39,6 +39,7 @@ namespace do_an_dsa
         {
             string noiDung = File.ReadAllText(url);
             noiDung = noiDung.Replace("<!DOCTYPE html>", "");
+            noiDung = noiDung.Replace("\n", "");
             return noiDung;
         }
         //Upload File
@@ -58,19 +59,21 @@ namespace do_an_dsa
             Regex tagRegex = new Regex("<[^>]+>");
 
             MatchCollection tagMatches = tagRegex.Matches(html);
-
+            ;
             foreach (Match tagMatch in tagMatches)
             {
                 CheckingTags.Enqueue(tagMatch.Value);
             }
-
+            CheckingTags.Count();
+            ;
             while (CheckingTags.Count() > 0)
             {
-                string tag = CheckingTags.Dequeue().ToString();
-
+                string tag = CheckingTags.Dequeue().data.ToString();
+                ;
                 if (tag.StartsWith("<"))
                 {
                     string tagName = tag.Trim('<', '>');
+                    ;
                     //tag mở
                     if (!tagName.StartsWith("/"))
                     {
@@ -84,16 +87,22 @@ namespace do_an_dsa
                         if (ValidTags.Count() > 0 && ValidTags.Peek().ToString().Equals(tagName))
                         {
                             ValidTags.Dequeue();
+                            ;
                         }
                         else
                         {
                             InvalidTags.Enqueue(tag);
+                            ;
                         }
+                        ;
                     }
                 }
+                ;
             }
+            ;
             //true: html đúng ; false: html sai
             return InvalidTags.Count() == 0 && ValidTags.Count() == 0;
+            ;
         }
 
         //inNoiDungDung

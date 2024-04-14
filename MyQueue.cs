@@ -82,11 +82,11 @@ namespace do_an_dsa
             return current;
         }
 
-        public object Peek()
+        public Node Peek()
         {
             if (rear == null)
                 throw new InvalidOperationException("Hàng đợi rỗng");
-            return rear.data;
+            return rear;
         }
     }
 }

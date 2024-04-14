@@ -131,7 +131,7 @@ namespace do_an_dsa
                         txt_xuLyFile.Text = selectedFile.inNoiDungDung(html);
                         ;
                     }
-                    else txt_xuLyFile.Text = selectedFile.inNoiDungSai(html);
+                    else txt_xuLyFile.Text = "Cú pháp HTML trong File không chính xác!";
                     ;
                 }
             }

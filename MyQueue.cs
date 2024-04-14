@@ -2,102 +2,90 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace do_an_dsa
 {
+    public class Node
+    {
+        public object data { get; set; }
+        public Node Prev { get; set; }
+        public Node Next { get; set; }
+    }
     public class MyQueue
     {
-        private class Node
-        {
-            public object File { get; set; }
-            public Node Next { get; set; }
+        
+        private Node rear;
+        private Node front;
 
-            public Node(object file, Node next)
-            {
-                File = file;
-                Next = next;
+        public void Enqueue(object ele)
+        {
+            Node n = new Node();
+            n.data = ele;
+            if (rear == null) {
+                rear = n;
+                front = n;
+            } else { 
+                rear.Prev = n;
+                n.Next = rear;
+                rear = n;
             }
         }
 
-        private Node head;
-        private Node tail;
-
-        public void Enqueue(object file)
+        public Node Dequeue()
         {
-            Node newNode = new Node(file, null);
-
-            if (tail == null)
-            {
-                head = newNode;
-                tail = newNode;
-            }
-            else
-            {
-                tail.Next = newNode;
-                tail = newNode;
-            }
+            if (front == null) return null;
+            Node d = front;
+            front = front.Prev;
+            if (front == null) { rear = null; }
+            else {  front.Next = null; }
+            return d;
         }
 
-        public object Dequeue()
-        {
-            if (head == null)
-                throw new InvalidOperationException("Hàng đợi rỗng.");
-
-            object file = head.File;
-            head = head.Next;
-
-            if (head == null)
-                tail = null;
-
-            return file;
+        public bool isEmpty() {
+            return rear == null || front == null;
         }
 
-        public int Count
+        public int Count()
         {
-            get
-            {
-                int count = 0;
-                Node current = head;
+            if (isEmpty()) return 0;
 
-                while (current != null)
-                {
-                    count++;
-                    current = current.Next;
-                }
-
-                return count;
-            }
-        }
-        public object LayFileTuChiSo(int chiSo)
-        {
-            if (chiSo < 0 || chiSo >= Count)
-                throw new IndexOutOfRangeException("Chỉ số không hợp lệ.");
-
-            Node current = head;
-            int index = 0;
+            int count = 0;
+            Node current = front;
 
             while (current != null)
             {
-                if (index == chiSo)
-                    return current.File;
-
-                index++;
-                current = current.Next;
+                count++;
+                current = current.Prev;
             }
 
-            return null; 
+            return count; 
+        }
+        public Node GetNode(int index)
+        {
+            if (index < 0 || index >= Count())
+                throw new IndexOutOfRangeException();
+
+            Node current = front;
+            int currentIndex = 0;
+
+            while (currentIndex < index)
+            {
+                current = current.Prev;
+                currentIndex++;
+            }
+
+            return current;
         }
 
         public object Peek()
         {
-            if (Count == 0)
-            {
-                throw new System.InvalidOperationException("Queue is empty");
-            }
-
-            return head.File;
+            if (rear == null)
+                throw new InvalidOperationException("Hàng đợi rỗng");
+            return rear.data;
         }
     }
 }

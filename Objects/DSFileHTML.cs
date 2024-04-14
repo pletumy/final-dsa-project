@@ -20,11 +20,11 @@ namespace do_an_dsa
             DSFile.Dequeue();
         }
         public int demDS() {
-            return DSFile.Count;
+            return DSFile.Count();
         }
-        public object layChiSo(int index)
+        public Node layNode(int index)
         {
-            return DSFile.LayFileTuChiSo(index);
+            return DSFile.GetNode(index);
         }
 
 

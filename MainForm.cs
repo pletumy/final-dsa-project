@@ -8,20 +8,19 @@ namespace do_an_dsa
         public MainForm()
         {
             InitializeComponent();
-
-
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
             //set up luôn có 1 file
-            FileHTML demo = new FileHTML(@"C:\Users\ADMIN\Downloads\EMPTY.html");
+            string fileUrl = "EMPTY.html";
+            FileHTML demo = new FileHTML(fileUrl);
+
             dsFileHTML.enqueueDS(demo);
 
             for (int i = 0; i < dsFileHTML.demDS(); i++)
             {
-                FileHTML file = (FileHTML)dsFileHTML.layChiSo(i);
+                FileHTML file = (FileHTML)dsFileHTML.layNode(i).data;
 
                 ListViewItem item = new ListViewItem(file.tenFile);
 
@@ -51,10 +50,11 @@ namespace do_an_dsa
             openFileDialog.Filter = "HTML Files (*.html;*.htm)|*.html;*.htm";
             openFileDialog.Title = "Chọn file HTML";
 
+
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 string selectedFile = openFileDialog.FileName;
-
+                
                 if (IsHtmlFile(selectedFile))
                 {
                     FileHTML newFile = new FileHTML(selectedFile);
@@ -65,6 +65,7 @@ namespace do_an_dsa
                 {
                     MessageBox.Show("Vui lòng chọn một file HTML!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
+               
             }
         }
         //check
@@ -80,11 +81,11 @@ namespace do_an_dsa
 
             for (int i = 0; i < dsFileHTML.demDS(); i++)
             {
-                FileHTML file = (FileHTML)dsFileHTML.layChiSo(i);
+                FileHTML file = (FileHTML)dsFileHTML.layNode(i).data;
 
                 ListViewItem item = new ListViewItem(file.tenFile);
 
-                item.SubItems.Add(file.url);
+                //item.SubItems.Add(file.url);
 
                 lvFile1.Items.Add(item);
             }
@@ -107,7 +108,7 @@ namespace do_an_dsa
                 int queueSize = dsFileHTML.demDS();
                 for (int i = 0; i < queueSize; i++)
                 {
-                    FileHTML file = (FileHTML)dsFileHTML.layChiSo(i);
+                    FileHTML file = (FileHTML)dsFileHTML.layNode(i).data;
 
                     if (file.tenFile.Equals(selectedItem))
                     {
@@ -121,13 +122,15 @@ namespace do_an_dsa
                 if (selectedFile != null)
                 {
                     string html = selectedFile.noiDung;
-                    bool isValid = selectedFile.kiemTraNoiDung(html);
+                    bool isValid = selectedFile.KiemTraNoiDung(html);
+                    ;
 
                     if (isValid)
                     {
                         txt_xuLyFile.Text = selectedFile.inNoiDungDung(html);
                     }
                     else txt_xuLyFile.Text = selectedFile.inNoiDungSai(html);
+                    ;
                 }
             }
         }

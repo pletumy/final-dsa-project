@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using do_an_dsa.Objects;
 
 namespace do_an_dsa
 {
@@ -15,9 +16,9 @@ namespace do_an_dsa
         public void enqueueDS(FileHTML file) {
             DSFile.Enqueue(file);
         }
-        public void dequeueDS()
+        public FileHTML dequeueDS()
         {
-            DSFile.Dequeue();
+            return (FileHTML)DSFile.Dequeue().data;
         }
         public int demDS() {
             return DSFile.Count();

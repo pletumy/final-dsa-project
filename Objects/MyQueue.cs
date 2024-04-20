@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
-namespace do_an_dsa
+namespace do_an_dsa.Objects
 {
     public class Node
     {
@@ -17,7 +17,7 @@ namespace do_an_dsa
     }
     public class MyQueue
     {
-        
+
         private Node rear;
         private Node front;
 
@@ -25,10 +25,13 @@ namespace do_an_dsa
         {
             Node n = new Node();
             n.data = ele;
-            if (rear == null) {
+            if (rear == null)
+            {
                 rear = n;
                 front = n;
-            } else { 
+            }
+            else
+            {
                 rear.Prev = n;
                 n.Next = rear;
                 rear = n;
@@ -41,14 +44,15 @@ namespace do_an_dsa
             Node d = front;
             front = front.Prev;
             if (front == null) { rear = null; }
-            else {  front.Next = null; }
+            else { front.Next = null; }
             return d;
         }
 
-        public bool isEmpty() {
+        public bool isEmpty()
+        {
             return rear == null || front == null;
         }
-        
+
         public int Count()
         {
             if (isEmpty()) return 0;
@@ -62,9 +66,9 @@ namespace do_an_dsa
                 current = current.Prev;
             }
 
-            return count; 
+            return count;
         }
-        
+
         public Node GetNode(int index)
         {
             if (index < 0 || index >= Count())

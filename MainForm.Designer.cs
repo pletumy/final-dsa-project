@@ -36,10 +36,11 @@
             grbHTML = new GroupBox();
             txt_xuLyFile = new TextBox();
             groupBox1 = new GroupBox();
+            btnHienThi = new Button();
             lvFile1 = new ListView();
             Xóa = new Button();
             btnThem = new Button();
-            btnHienThi = new Button();
+            tenFile = new ColumnHeader();
             grbActions.SuspendLayout();
             grbHTML.SuspendLayout();
             groupBox1.SuspendLayout();
@@ -146,12 +147,21 @@
             groupBox1.TabStop = false;
             groupBox1.Text = "DANH SÁCH FILE";
             // 
+            // btnHienThi
+            // 
+            btnHienThi.ForeColor = Color.FromArgb(40, 40, 40);
+            btnHienThi.Location = new Point(19, 443);
+            btnHienThi.Margin = new Padding(4);
+            btnHienThi.Name = "btnHienThi";
+            btnHienThi.Size = new Size(115, 43);
+            btnHienThi.TabIndex = 7;
+            btnHienThi.Text = "Hiển thị";
+            btnHienThi.UseVisualStyleBackColor = true;
+            btnHienThi.Click += btnHienThi_Click;
+            // 
             // lvFile1
             // 
-            // Set to details view.
-            lvFile1.View = View.Details;
-            // Add a column with width 20 and left alignment.
-            lvFile1.Columns.Add("Tên file", 409, HorizontalAlignment.Left);
+            lvFile1.Columns.AddRange(new ColumnHeader[] { tenFile });
             lvFile1.FullRowSelect = true;
             lvFile1.Location = new Point(3, 30);
             lvFile1.Name = "lvFile1";
@@ -171,6 +181,7 @@
             Xóa.TabIndex = 5;
             Xóa.Text = "Xóa";
             Xóa.UseVisualStyleBackColor = true;
+            Xóa.Click += Xóa_Click;
             // 
             // btnThem
             // 
@@ -184,17 +195,10 @@
             btnThem.UseVisualStyleBackColor = true;
             btnThem.Click += btnThem_Click;
             // 
-            // btnHienThi
+            // tenFile
             // 
-            btnHienThi.ForeColor = Color.FromArgb(40, 40, 40);
-            btnHienThi.Location = new Point(19, 443);
-            btnHienThi.Margin = new Padding(4);
-            btnHienThi.Name = "btnHienThi";
-            btnHienThi.Size = new Size(115, 43);
-            btnHienThi.TabIndex = 7;
-            btnHienThi.Text = "Hiển thị";
-            btnHienThi.UseVisualStyleBackColor = true;
-            btnHienThi.Click += btnHienThi_Click;
+            tenFile.Text = "Tên File";
+            tenFile.Width = 360;
             // 
             // MainForm
             // 
@@ -237,5 +241,6 @@
         private ListView lvFile;
         private ListView lvFile1;
         private Button btnHienThi;
+        private ColumnHeader tenFile;
     }
 }

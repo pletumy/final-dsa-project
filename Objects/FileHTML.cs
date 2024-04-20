@@ -9,6 +9,7 @@ using System.Text.RegularExpressions;
 using System.Formats.Tar;
 using System.Security.Policy;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using do_an_dsa.Objects;
 
 namespace do_an_dsa
 {

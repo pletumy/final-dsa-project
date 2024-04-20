@@ -1,5 +1,7 @@
 ﻿
 
+using System.CodeDom.Compiler;
+
 namespace do_an_dsa
 {
     public partial class MainForm : Form
@@ -55,7 +57,7 @@ namespace do_an_dsa
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 string selectedFile = openFileDialog.FileName;
-                
+
                 if (IsHtmlFile(selectedFile))
                 {
                     FileHTML newFile = new FileHTML(selectedFile);
@@ -66,7 +68,7 @@ namespace do_an_dsa
                 {
                     MessageBox.Show("Vui lòng chọn một file HTML!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
-               
+
             }
         }
         //check
@@ -96,7 +98,6 @@ namespace do_an_dsa
         {
 
         }
-
 
         private void btnHienThi_Click(object sender, EventArgs e)
         {
@@ -134,6 +135,36 @@ namespace do_an_dsa
                     else txt_xuLyFile.Text = "Cú pháp HTML trong File không chính xác!";
                     ;
                 }
+            }
+        }
+
+        private void Xóa_Click(object sender, EventArgs e)
+        {
+            if (lvFile1.SelectedItems.Count > 0)
+            {
+                string selectedItem = lvFile1.SelectedItems[0].Text;
+                DSFileHTML temp = new DSFileHTML();
+                int index = dsFileHTML.demDS();
+                for (int i = 0; i < index; i++)
+                {
+                    //FileHTML file = (FileHTML)dsFileHTML.layNode(i).data; 
+                    FileHTML file = dsFileHTML.dequeueDS();
+                    if (!file.tenFile.Equals(selectedItem))
+                    {
+                        temp.enqueueDS(file);
+                    }
+                }
+                //index = ;
+                while (temp.demDS() != 0) {
+                    ;
+                    dsFileHTML.enqueueDS(temp.dequeueDS());
+                    ;
+                }
+                UpdateListView();
+            }
+            else
+            {
+                MessageBox.Show("Vui lòng chọn một file HTML!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
     }

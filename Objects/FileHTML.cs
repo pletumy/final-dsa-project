@@ -52,10 +52,11 @@ namespace do_an_dsa
         }
 
         //kiemTraNoiDungFile
+        MyQueue tagMo = new MyQueue();
+        MyQueue tagDong = new MyQueue();
         public bool KiemTraNoiDung(string html)
         {
-            MyQueue tagMo = new MyQueue();
-            MyQueue tagDong = new MyQueue();
+            
             Regex tagRegex = new Regex("<[^>]+>");
             MatchCollection tagMatches = tagRegex.Matches(html);
 
@@ -77,6 +78,7 @@ namespace do_an_dsa
                 string tag2 = tagDong.Dequeue().data.ToString();
                 if (tag1.Equals(tag2))
                 {
+
                     return false;
                 }
             }
@@ -87,10 +89,35 @@ namespace do_an_dsa
         //inNoiDungDung
         public string inNoiDungDung(string html)
         {
-            string contentWithoutTags = Regex.Replace(html, "<[^>]+>", "").Trim();
+            string contentWithoutTags = Regex.Replace(html, @"<[^>]+>", match =>
+            {
+                string tagName = Regex.Match(match.Value, @"<(\w+)").Groups[1].Value;
+                if (tagName.ToLower() != "script" && tagName.ToLower() != "style")
+                {
+                    return $"{match.Groups[1].Value}\n";
+                }
+                else
+                {
+                    return "";
+                }
+            }).Trim();
             return contentWithoutTags;
         }
-
+        /*
+        public MyQueue inNoiDungSai()
+        {
+            MyQueue temp = new MyQueue();  
+            if (tagDong.Count() != 0) {
+                temp.Enqueue(tagDong.Dequeue().data);
+            }
+            if (tagMo.Count() != 0)
+            {
+                temp.Enqueue(tagMo.Dequeue().data);
+            }
+            return temp;
+            
+        }
+        */
 
     }
 }

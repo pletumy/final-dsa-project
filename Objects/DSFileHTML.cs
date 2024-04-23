@@ -27,8 +27,5 @@ namespace do_an_dsa
         {
             return DSFile.GetNode(index);
         }
-
-
-
     }
 }

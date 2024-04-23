@@ -30,17 +30,16 @@
         {
             lblPhanMem = new Label();
             grbActions = new GroupBox();
-            btnLink = new Button();
             btnSave = new Button();
             btnEdit = new Button();
             grbHTML = new GroupBox();
-            txt_xuLyFile = new TextBox();
+            txt_xuLyFile = new RichTextBox();
             groupBox1 = new GroupBox();
             btnHienThi = new Button();
             lvFile1 = new ListView();
+            tenFile = new ColumnHeader();
             Xóa = new Button();
             btnThem = new Button();
-            tenFile = new ColumnHeader();
             grbActions.SuspendLayout();
             grbHTML.SuspendLayout();
             groupBox1.SuspendLayout();
@@ -62,7 +61,6 @@
             // grbActions
             // 
             grbActions.BackColor = Color.Transparent;
-            grbActions.Controls.Add(btnLink);
             grbActions.Controls.Add(btnSave);
             grbActions.Controls.Add(btnEdit);
             grbActions.ForeColor = Color.FromArgb(163, 252, 255);
@@ -75,22 +73,10 @@
             grbActions.TabStop = false;
             grbActions.Text = "THAO TÁC FILE";
             // 
-            // btnLink
-            // 
-            btnLink.ForeColor = Color.FromArgb(40, 40, 40);
-            btnLink.Location = new Point(790, 49);
-            btnLink.Margin = new Padding(4);
-            btnLink.Name = "btnLink";
-            btnLink.Size = new Size(257, 43);
-            btnLink.TabIndex = 3;
-            btnLink.Text = "Trích xuất liên kết";
-            btnLink.UseVisualStyleBackColor = true;
-            btnLink.Click += btnLink_Click;
-            // 
             // btnSave
             // 
             btnSave.ForeColor = Color.FromArgb(40, 40, 40);
-            btnSave.Location = new Point(506, 49);
+            btnSave.Location = new Point(684, 49);
             btnSave.Margin = new Padding(4);
             btnSave.Name = "btnSave";
             btnSave.Size = new Size(206, 43);
@@ -102,13 +88,14 @@
             // btnEdit
             // 
             btnEdit.ForeColor = Color.FromArgb(40, 40, 40);
-            btnEdit.Location = new Point(218, 49);
+            btnEdit.Location = new Point(331, 49);
             btnEdit.Margin = new Padding(4);
             btnEdit.Name = "btnEdit";
             btnEdit.Size = new Size(206, 43);
             btnEdit.TabIndex = 1;
             btnEdit.Text = "Chỉnh sửa";
             btnEdit.UseVisualStyleBackColor = true;
+            btnEdit.Click += btnEdit_Click;
             // 
             // grbHTML
             // 
@@ -124,13 +111,12 @@
             // 
             // txt_xuLyFile
             // 
-            txt_xuLyFile.Location = new Point(6, 48);
-            txt_xuLyFile.Multiline = true;
+            txt_xuLyFile.Enabled = false;
+            txt_xuLyFile.Location = new Point(6, 33);
             txt_xuLyFile.Name = "txt_xuLyFile";
-            txt_xuLyFile.ScrollBars = ScrollBars.Both;
-            txt_xuLyFile.Size = new Size(707, 445);
+            txt_xuLyFile.Size = new Size(706, 455);
             txt_xuLyFile.TabIndex = 0;
-            txt_xuLyFile.TextChanged += txt_xuLyFile_TextChanged;
+            txt_xuLyFile.Text = "";
             // 
             // groupBox1
             // 
@@ -171,6 +157,11 @@
             lvFile1.View = View.Details;
             lvFile1.SelectedIndexChanged += lvFile1_SelectedIndexChanged;
             // 
+            // tenFile
+            // 
+            tenFile.Text = "Tên File";
+            tenFile.Width = 360;
+            // 
             // Xóa
             // 
             Xóa.ForeColor = Color.FromArgb(40, 40, 40);
@@ -195,11 +186,6 @@
             btnThem.UseVisualStyleBackColor = true;
             btnThem.Click += btnThem_Click;
             // 
-            // tenFile
-            // 
-            tenFile.Text = "Tên File";
-            tenFile.Width = 360;
-            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(14F, 27F);
@@ -221,7 +207,6 @@
             Load += Form1_Load;
             grbActions.ResumeLayout(false);
             grbHTML.ResumeLayout(false);
-            grbHTML.PerformLayout();
             groupBox1.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
@@ -231,8 +216,6 @@
         private Label lblPhanMem;
         private GroupBox grbActions;
         private GroupBox grbHTML;
-        private TextBox txt_xuLyFile;
-        private Button btnLink;
         private Button btnSave;
         private Button btnEdit;
         private GroupBox groupBox1;
@@ -242,5 +225,6 @@
         private ListView lvFile1;
         private Button btnHienThi;
         private ColumnHeader tenFile;
+        private RichTextBox txt_xuLyFile;
     }
 }

@@ -1,6 +1,10 @@
 ﻿
 
+using do_an_dsa.Objects;
 using System.CodeDom.Compiler;
+using System.Net.Http;
+using System.Text.RegularExpressions;
+using System.Windows.Forms;
 
 namespace do_an_dsa
 {
@@ -40,6 +44,76 @@ namespace do_an_dsa
 
         private void btnSave_Click(object sender, EventArgs e)
         {
+            string fileThayDoi = txt_xuLyFile.Text.Trim();
+            fileThayDoi = fileThayDoi.Replace("<!DOCTYPE html>", "").Trim();
+            if (lvFile1.SelectedItems.Count > 0)
+            {
+                string selectedItem = lvFile1.SelectedItems[0].Text;
+
+                FileHTML selectedFile = null;
+
+                int queueSize = dsFileHTML.demDS();
+
+
+                for (int i = 0; i < queueSize; i++)
+                {
+                    FileHTML file = (FileHTML)dsFileHTML.layNode(i).data;
+
+                    if (file.tenFile.Equals(selectedItem))
+                    {
+                        selectedFile = file;
+                        break;
+                    }
+
+                    dsFileHTML.enqueueDS(file);
+                }
+
+                if (selectedFile != null)
+                {
+                    bool isValid = selectedFile.KiemTraNoiDung(fileThayDoi);
+                    if (isValid)
+                    {
+                        using (StreamWriter writer = new StreamWriter(selectedFile.url))
+                        {
+                            writer.Write(txt_xuLyFile.Text);
+                        }
+
+                        //string selectedItem = lvFile1.SelectedItems[0].Text;
+                        DSFileHTML temp = new DSFileHTML();
+                        int index = dsFileHTML.demDS();
+                        for (int i = 0; i < index; i++)
+                        {
+                            //FileHTML file = (FileHTML)dsFileHTML.layNode(i).data; 
+                            FileHTML file = dsFileHTML.dequeueDS();
+                            if (!file.tenFile.Equals(selectedItem))
+                            {
+                                temp.enqueueDS(file);
+                            }
+                        }
+                        //index = ;
+                        while (temp.demDS() != 0)
+                        {
+                            dsFileHTML.enqueueDS(temp.dequeueDS());
+                        }
+
+                       string urlFileMoi = selectedFile.url;
+                       FileHTML newFile = new FileHTML(urlFileMoi);
+
+                        dsFileHTML.enqueueDS(newFile);
+
+                        UpdateListView();
+
+                        //btnHienThi_Click(newFile,e);
+
+                        MessageBox.Show("Lưu thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Kiểm tra lại nội dung hoặc cú pháp HTML!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                }
+
+            }
         }
 
         private void txt_xuLyFile_TextChanged(object sender, EventArgs e)
@@ -101,6 +175,7 @@ namespace do_an_dsa
 
         private void btnHienThi_Click(object sender, EventArgs e)
         {
+            txt_xuLyFile.Enabled = false;
             if (lvFile1.SelectedItems.Count > 0)
             {
                 string selectedItem = lvFile1.SelectedItems[0].Text;
@@ -108,6 +183,8 @@ namespace do_an_dsa
                 FileHTML selectedFile = null;
 
                 int queueSize = dsFileHTML.demDS();
+
+
                 for (int i = 0; i < queueSize; i++)
                 {
                     FileHTML file = (FileHTML)dsFileHTML.layNode(i).data;
@@ -123,17 +200,53 @@ namespace do_an_dsa
 
                 if (selectedFile != null)
                 {
-                    string html = selectedFile.noiDung;
+                    string html = selectedFile.LayNoiDungFile(selectedFile.url);
                     bool isValid = selectedFile.KiemTraNoiDung(html);
-                    ;
 
                     if (isValid)
                     {
                         txt_xuLyFile.Text = selectedFile.inNoiDungDung(html);
-                        ;
                     }
-                    else txt_xuLyFile.Text = "Cú pháp HTML trong File không chính xác!";
-                    ;
+                    else
+                    {
+                        txt_xuLyFile.Text = "Cú pháp HTML trong File không chính xác!";
+                        /*
+                        MyQueue wrongWords = selectedFile.inNoiDungSai();
+                        ;
+                        txt_xuLyFile.Clear();
+
+                        string htmlContent;
+                        using (StreamReader reader = new StreamReader(selectedFile.url))
+                        {
+                            htmlContent = reader.ReadToEnd();
+                        }
+                        List<string> wrongWordsList = new List<string>();
+                        while (wrongWords.Count() > 0)
+                        {
+                            wrongWordsList.Add(wrongWords.Dequeue().data.ToString());
+                            ;
+                        }
+                        string regexPattern = string.Join("|", wrongWordsList);
+
+                        MatchCollection matches = Regex.Matches(htmlContent, regexPattern);
+                        int currentIndex = 0;
+
+                        foreach (Match match in matches)
+                        {
+                            if (match.Index > currentIndex)
+                            {
+                               
+                                txt_xuLyFile.AppendText(htmlContent.Substring(currentIndex, match.Index - currentIndex));
+                            }
+                            txt_xuLyFile.SelectionColor = Color.Red;
+                            txt_xuLyFile.AppendText(match.Value);
+
+                            currentIndex = match.Index + match.Length;
+                        }
+                        txt_xuLyFile.SelectionColor = Color.Black;
+                        txt_xuLyFile.AppendText(htmlContent.Substring(currentIndex));
+                        */
+                    }
                 }
             }
         }
@@ -154,11 +267,9 @@ namespace do_an_dsa
                         temp.enqueueDS(file);
                     }
                 }
-                //index = ;
-                while (temp.demDS() != 0) {
-                    ;
+                while (temp.demDS() != 0)
+                {
                     dsFileHTML.enqueueDS(temp.dequeueDS());
-                    ;
                 }
                 UpdateListView();
             }
@@ -167,5 +278,45 @@ namespace do_an_dsa
                 MessageBox.Show("Vui lòng chọn một file HTML!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
+
+        private void btnEdit_Click(object sender, EventArgs e)
+        {
+            txt_xuLyFile.Enabled = true;
+            if (lvFile1.SelectedItems.Count > 0)
+            {
+                //hiển thị file
+                string selectedItem = lvFile1.SelectedItems[0].Text;
+
+                FileHTML selectedFile = null;
+
+                int queueSize = dsFileHTML.demDS();
+
+
+                for (int i = 0; i < queueSize; i++)
+                {
+                    FileHTML file = (FileHTML)dsFileHTML.layNode(i).data;
+
+                    if (file.tenFile.Equals(selectedItem))
+                    {
+                        selectedFile = file;
+                        break;
+                    }
+
+                    dsFileHTML.enqueueDS(file);
+                }
+                if (selectedFile != null)
+                {
+                    string htmlContent;
+                    using (StreamReader reader = new StreamReader(selectedFile.url))
+                    {
+                        htmlContent = reader.ReadToEnd();
+                    }
+                    txt_xuLyFile.Text = htmlContent;
+                }
+                //
+            }
+        }
+
+
     }
 }

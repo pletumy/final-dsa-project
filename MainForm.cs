@@ -78,30 +78,30 @@ namespace do_an_dsa
                             writer.Write(txt_xuLyFile.Text);
                         }
 
-                        //string selectedItem = lvFile1.SelectedItems[0].Text;
-                        DSFileHTML temp = new DSFileHTML();
-                        int index = dsFileHTML.demDS();
-                        for (int i = 0; i < index; i++)
-                        {
-                            //FileHTML file = (FileHTML)dsFileHTML.layNode(i).data; 
-                            FileHTML file = dsFileHTML.dequeueDS();
-                            if (!file.tenFile.Equals(selectedItem))
-                            {
-                                temp.enqueueDS(file);
-                            }
-                        }
-                        //index = ;
-                        while (temp.demDS() != 0)
-                        {
-                            dsFileHTML.enqueueDS(temp.dequeueDS());
-                        }
+                       // //string selectedItem = lvFile1.SelectedItems[0].Text;
+                       // DSFileHTML temp = new DSFileHTML();
+                       // int index = dsFileHTML.demDS();
+                       // for (int i = 0; i < index; i++)
+                       // {
+                       //     //FileHTML file = (FileHTML)dsFileHTML.layNode(i).data; 
+                       //     FileHTML file = dsFileHTML.dequeueDS();
+                       //     if (!file.tenFile.Equals(selectedItem))
+                       //     {
+                       //         temp.enqueueDS(file);
+                       //     }
+                       // }
+                       // //index = ;
+                       // while (temp.demDS() != 0)
+                       // {
+                       //     dsFileHTML.enqueueDS(temp.dequeueDS());
+                       // }
 
-                       string urlFileMoi = selectedFile.url;
-                       FileHTML newFile = new FileHTML(urlFileMoi);
+                       //string urlFileMoi = selectedFile.url;
+                       //FileHTML newFile = new FileHTML(urlFileMoi);
 
-                        dsFileHTML.enqueueDS(newFile);
+                       // dsFileHTML.enqueueDS(newFile);
 
-                        UpdateListView();
+                       // UpdateListView();
 
                         //btnHienThi_Click(newFile,e);
 
@@ -135,14 +135,33 @@ namespace do_an_dsa
                 if (IsHtmlFile(selectedFile))
                 {
                     FileHTML newFile = new FileHTML(selectedFile);
-                    dsFileHTML.enqueueDS(newFile);
-                    UpdateListView();
+                    bool isFileAlreadySelected = false;
+                    foreach (ListViewItem item in lvFile1.Items)
+                    {
+
+                        if (item.Text == newFile.tenFile)
+                        {
+                            isFileAlreadySelected = true;
+                            ;
+                            break;
+                        }
+                    }
+                    ;
+                    if (isFileAlreadySelected)
+                    {
+                        MessageBox.Show("File này đã được chọn trước đó. Vui lòng chọn file khác!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                    else
+                    {
+                        //FileHTML newFile = new FileHTML(selectedFile);
+                        dsFileHTML.enqueueDS(newFile);
+                        UpdateListView();
+                    }
                 }
                 else
                 {
                     MessageBox.Show("Vui lòng chọn một file HTML!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
-
             }
         }
         //check
@@ -155,8 +174,8 @@ namespace do_an_dsa
         private void UpdateListView()
         {
             lvFile1.Items.Clear();
-
-            for (int i = 0; i < dsFileHTML.demDS(); i++)
+            int index = dsFileHTML.demDS();
+            for (int i = 0; i < index; i++)
             {
                 FileHTML file = (FileHTML)dsFileHTML.layNode(i).data;
 

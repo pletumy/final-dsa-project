@@ -56,34 +56,71 @@ namespace do_an_dsa
         MyQueue tagDong = new MyQueue();
         public bool KiemTraNoiDung(string html)
         {
-            
+            /*tạo 2 match collection -> sort -> enqueue vào opening tags và closing tags
+             * số lượng opening tags = closing tags
+             * nội dung opening tags equals closing tags
+             * */
             Regex tagRegex = new Regex("<[^>]+>");
             MatchCollection tagMatches = tagRegex.Matches(html);
 
-            foreach (Match tagMatch in tagMatches)
-            {
-                string tagName = tagMatch.Value.Trim('<', '>');
-                if (tagName.StartsWith("/")) {
-                    tagName = tagName.Substring(1);
-                    tagDong.Enqueue(tagName);
-                }
-                else { 
-                    tagMo.Enqueue(tagName);
-                }
-            }
+            List<string> openTags = new List<string>();
+            List<string> closeTags = new List<string>();
 
-            while (tagMo.Count() > 0 && tagDong.Count() > 0)
+            foreach (Match match in tagMatches)
             {
-                string tag1 = tagMo.Dequeue().data.ToString();
-                string tag2 = tagDong.Dequeue().data.ToString();
-                if (tag1.Equals(tag2))
+                string tag = match.Value.Trim('<', '>');
+                if (tag.StartsWith("/"))
                 {
-
-                    return false;
+                    closeTags.Add(tag);
+                }
+                else
+                {
+                    openTags.Add(tag);
                 }
             }
-                //true: html đúng ; false: html sai
-                return tagMo.Count() == 0 && tagDong.Count() == 0;
+
+            openTags.Sort();
+            closeTags.Sort();
+
+            foreach (string tag in openTags)
+            {
+                tagMo.Enqueue(tag);
+            }
+
+            foreach (string tag in closeTags)
+            {
+                tagDong.Enqueue(tag);
+            }
+
+            //tagDong != tagMo => false
+
+            if (tagDong.Count() != tagMo.Count())
+            {
+                return false;
+                ;
+            }
+            else {
+                //checkNoiDungTag
+                while (tagMo.Count() > 0 && tagDong.Count() > 0)
+                {
+                    string tag1 = tagMo.Peek().data.ToString();
+                    string tag2 = tagDong.Peek().data.ToString().Substring(1);
+                    if (tag1.Equals(tag2))
+                    {
+                        tagMo.Dequeue();
+                        tagDong.Dequeue();
+                        ;
+                    }
+                    else
+                    {
+                        return false;
+                        ;
+                    }
+                }
+            }
+            //true: html đúng ; false: html sai
+            return true;
+            ;
         }
 
         //inNoiDungDung
@@ -103,21 +140,5 @@ namespace do_an_dsa
             }).Trim();
             return contentWithoutTags;
         }
-        /*
-        public MyQueue inNoiDungSai()
-        {
-            MyQueue temp = new MyQueue();  
-            if (tagDong.Count() != 0) {
-                temp.Enqueue(tagDong.Dequeue().data);
-            }
-            if (tagMo.Count() != 0)
-            {
-                temp.Enqueue(tagMo.Dequeue().data);
-            }
-            return temp;
-            
-        }
-        */
-
     }
 }

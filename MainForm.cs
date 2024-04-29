@@ -44,8 +44,8 @@ namespace do_an_dsa
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            string fileThayDoi = txt_xuLyFile.Text.Trim();
-            fileThayDoi = fileThayDoi.Replace("<!DOCTYPE html>", "").Trim();
+            string fileThayDoi = txt_xuLyFile.Text.Replace("<!DOCTYPE html>", "").Replace(" ", "").Replace("\n", "").Replace("\r", "");
+            
             if (lvFile1.SelectedItems.Count > 0)
             {
                 string selectedItem = lvFile1.SelectedItems[0].Text;
@@ -77,34 +77,6 @@ namespace do_an_dsa
                         {
                             writer.Write(txt_xuLyFile.Text);
                         }
-
-                       // //string selectedItem = lvFile1.SelectedItems[0].Text;
-                       // DSFileHTML temp = new DSFileHTML();
-                       // int index = dsFileHTML.demDS();
-                       // for (int i = 0; i < index; i++)
-                       // {
-                       //     //FileHTML file = (FileHTML)dsFileHTML.layNode(i).data; 
-                       //     FileHTML file = dsFileHTML.dequeueDS();
-                       //     if (!file.tenFile.Equals(selectedItem))
-                       //     {
-                       //         temp.enqueueDS(file);
-                       //     }
-                       // }
-                       // //index = ;
-                       // while (temp.demDS() != 0)
-                       // {
-                       //     dsFileHTML.enqueueDS(temp.dequeueDS());
-                       // }
-
-                       //string urlFileMoi = selectedFile.url;
-                       //FileHTML newFile = new FileHTML(urlFileMoi);
-
-                       // dsFileHTML.enqueueDS(newFile);
-
-                       // UpdateListView();
-
-                        //btnHienThi_Click(newFile,e);
-
                         MessageBox.Show("Lưu thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
                     else
@@ -131,22 +103,18 @@ namespace do_an_dsa
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 string selectedFile = openFileDialog.FileName;
-
                 if (IsHtmlFile(selectedFile))
                 {
                     FileHTML newFile = new FileHTML(selectedFile);
                     bool isFileAlreadySelected = false;
                     foreach (ListViewItem item in lvFile1.Items)
                     {
-
                         if (item.Text == newFile.tenFile)
                         {
                             isFileAlreadySelected = true;
-                            ;
                             break;
                         }
                     }
-                    ;
                     if (isFileAlreadySelected)
                     {
                         MessageBox.Show("File này đã được chọn trước đó. Vui lòng chọn file khác!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -275,20 +243,15 @@ namespace do_an_dsa
             if (lvFile1.SelectedItems.Count > 0)
             {
                 string selectedItem = lvFile1.SelectedItems[0].Text;
-                DSFileHTML temp = new DSFileHTML();
                 int index = dsFileHTML.demDS();
+                
                 for (int i = 0; i < index; i++)
                 {
-                    //FileHTML file = (FileHTML)dsFileHTML.layNode(i).data; 
-                    FileHTML file = dsFileHTML.dequeueDS();
+                    FileHTML file = dsFileHTML.dequeueDS(); 
                     if (!file.tenFile.Equals(selectedItem))
                     {
-                        temp.enqueueDS(file);
+                        dsFileHTML.enqueueDS(file);
                     }
-                }
-                while (temp.demDS() != 0)
-                {
-                    dsFileHTML.enqueueDS(temp.dequeueDS());
                 }
                 UpdateListView();
             }

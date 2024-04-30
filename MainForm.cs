@@ -18,13 +18,7 @@ namespace do_an_dsa
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            //set up luôn có 1 file
-            /*
-            string fileUrl = "EMPTY.html";
-            FileHTML demo = new FileHTML(fileUrl);
-
-            dsFileHTML.enqueueDS(demo);
-            */
+            
             for (int i = 0; i < dsFileHTML.demDS(); i++)
             {
                 FileHTML file = (FileHTML)dsFileHTML.layNode(i).data;
@@ -99,7 +93,6 @@ namespace do_an_dsa
             openFileDialog.Filter = "HTML Files (*.html;*.htm)|*.html;*.htm";
             openFileDialog.Title = "Chọn file HTML";
 
-
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 string selectedFile = openFileDialog.FileName;
@@ -146,11 +139,7 @@ namespace do_an_dsa
             for (int i = 0; i < index; i++)
             {
                 FileHTML file = (FileHTML)dsFileHTML.layNode(i).data;
-
                 ListViewItem item = new ListViewItem(file.tenFile);
-
-                //item.SubItems.Add(file.url);
-
                 lvFile1.Items.Add(item);
             }
         }
@@ -197,42 +186,7 @@ namespace do_an_dsa
                     else
                     {
                         txt_xuLyFile.Text = "Cú pháp HTML trong File không chính xác!";
-                        /*
-                        MyQueue wrongWords = selectedFile.inNoiDungSai();
-                        ;
-                        txt_xuLyFile.Clear();
-
-                        string htmlContent;
-                        using (StreamReader reader = new StreamReader(selectedFile.url))
-                        {
-                            htmlContent = reader.ReadToEnd();
-                        }
-                        List<string> wrongWordsList = new List<string>();
-                        while (wrongWords.Count() > 0)
-                        {
-                            wrongWordsList.Add(wrongWords.Dequeue().data.ToString());
-                            ;
-                        }
-                        string regexPattern = string.Join("|", wrongWordsList);
-
-                        MatchCollection matches = Regex.Matches(htmlContent, regexPattern);
-                        int currentIndex = 0;
-
-                        foreach (Match match in matches)
-                        {
-                            if (match.Index > currentIndex)
-                            {
-                               
-                                txt_xuLyFile.AppendText(htmlContent.Substring(currentIndex, match.Index - currentIndex));
-                            }
-                            txt_xuLyFile.SelectionColor = Color.Red;
-                            txt_xuLyFile.AppendText(match.Value);
-
-                            currentIndex = match.Index + match.Length;
-                        }
-                        txt_xuLyFile.SelectionColor = Color.Black;
-                        txt_xuLyFile.AppendText(htmlContent.Substring(currentIndex));
-                        */
+                       
                     }
                 }
             }
@@ -266,13 +220,9 @@ namespace do_an_dsa
             txt_xuLyFile.Enabled = true;
             if (lvFile1.SelectedItems.Count > 0)
             {
-                //hiển thị file
                 string selectedItem = lvFile1.SelectedItems[0].Text;
-
                 FileHTML selectedFile = null;
-
                 int queueSize = dsFileHTML.demDS();
-
 
                 for (int i = 0; i < queueSize; i++)
                 {
@@ -286,6 +236,7 @@ namespace do_an_dsa
 
                     dsFileHTML.enqueueDS(file);
                 }
+                //hiển thị file gốc, chưa chỉnh sửa
                 if (selectedFile != null)
                 {
                     string htmlContent;
@@ -295,10 +246,11 @@ namespace do_an_dsa
                     }
                     txt_xuLyFile.Text = htmlContent;
                 }
-                //
+            }
+            else
+            {
+                MessageBox.Show("Vui lòng chọn một file HTML!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
-
-
     }
 }

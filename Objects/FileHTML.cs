@@ -97,7 +97,6 @@ namespace do_an_dsa
             if (tagDong.Count() != tagMo.Count())
             {
                 return false;
-                ;
             }
             else {
                 //checkNoiDungTag
@@ -109,18 +108,15 @@ namespace do_an_dsa
                     {
                         tagMo.Dequeue();
                         tagDong.Dequeue();
-                        ;
                     }
                     else
                     {
                         return false;
-                        ;
                     }
                 }
             }
             //true: html đúng ; false: html sai
             return true;
-            ;
         }
 
         //inNoiDungDung

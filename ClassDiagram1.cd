@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
+  <Class Name="do_an_dsa.FileHTML">
+    <Position X="3" Y="2.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAACBAJIAAAAAgAAAAAAAAAIAAgAAEAAAAAAAAA=</HashCode>
+      <FileName>Objects\FileHTML.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="do_an_dsa.DSFileHTML">
+    <Position X="5.75" Y="2.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAEAAAAAAAQAAQAAAAAAEAAAAAAAABAAgAAAAA=</HashCode>
+      <FileName>Objects\DSFileHTML.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="do_an_dsa.MainForm">
+    <Position X="8.5" Y="2.75" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>IAAAgAAAICABACAAMgCCAgACAAIAABAAASQQEIIoBAg=</HashCode>
+      <FileName>MainForm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="do_an_dsa.Objects.MyQueue">
+    <Position X="0.75" Y="4.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAAABAEAAAAAAAACAQAEAAABAAAAAAAAAAAQAA=</HashCode>
+      <FileName>Objects\MyQueue.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="do_an_dsa.Objects.Node">
+    <Position X="0.75" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAQAAAAAAA=</HashCode>
+      <FileName>Objects\MyQueue.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="System.Object" Collapsed="true">
+    <Position X="3.5" Y="1.25" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="System.Windows.Forms.Form" Collapsed="true">
+    <Position X="9" Y="1.25" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

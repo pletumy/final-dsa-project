@@ -39,7 +39,7 @@ namespace do_an_dsa
         private void btnSave_Click(object sender, EventArgs e)
         {
             string fileThayDoi = txt_xuLyFile.Text.Replace("<!DOCTYPE html>", "").Replace(" ", "").Replace("\n", "").Replace("\r", "");
-            
+            ;
             if (lvFile1.SelectedItems.Count > 0)
             {
                 string selectedItem = lvFile1.SelectedItems[0].Text;

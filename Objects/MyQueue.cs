@@ -90,7 +90,7 @@ namespace do_an_dsa.Objects
         {
             if (rear == null)
                 throw new InvalidOperationException("Hàng đợi rỗng");
-            return rear;
+            return front;
         }
     }
 }

@@ -97,24 +97,30 @@ namespace do_an_dsa
             if (tagDong.Count() != tagMo.Count())
             {
                 return false;
+                ;
             }
             else {
                 //checkNoiDungTag
                 while (tagMo.Count() > 0 && tagDong.Count() > 0)
                 {
                     string tag1 = tagMo.Peek().data.ToString();
+                    ;
                     string tag2 = tagDong.Peek().data.ToString().Substring(1);
+                    ;
                     if (tag1.Equals(tag2))
                     {
                         tagMo.Dequeue();
                         tagDong.Dequeue();
+                        ;
                     }
                     else
                     {
                         return false;
+                        ;
                     }
                 }
             }
+            ;
             //true: html đúng ; false: html sai
             return true;
         }
